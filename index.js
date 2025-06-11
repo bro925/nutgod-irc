@@ -17,11 +17,11 @@ wss.on('connection', (ws, req) => {
   const ip = req.socket.remoteAddress;
   let nickname = 'Unknown';
 
-  console.log(`[IRC] New client connected from ${ip}`);
+  console.log(`[IRC] New client connected!`);
 
   ws.on('message', (message) => {
     const msg = message.toString();
-    console.log(`[IRC] Received: ${msg}`);
+    console.log(`[IRC] ${nickname}: ${msg}`);
 
     if (msg.startsWith('NICK ')) {
       nickname = msg.substring(5).trim();
@@ -39,7 +39,8 @@ wss.on('connection', (ws, req) => {
   });
 
   ws.on('close', () => {
-    console.log(`[IRC] Client from ${ip} disconnected`);
+    console.log(`[IRC] ${nickname} disconnected from IRC.`);
+    client.send(`${nickname} disconnected from IRC.`);
   });
 
   ws.send('Connected to server!');
