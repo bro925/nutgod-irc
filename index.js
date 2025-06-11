@@ -40,7 +40,7 @@ wss.on('connection', (ws, req) => {
 
   ws.on('close', () => {
     console.log(`[IRC] ${nickname} disconnected from IRC.`);
-    client.send(`${nickname} disconnected from IRC.`);
+    ws.send(`${nickname} disconnected from IRC.`);
   });
 
   ws.send('Connected to server!');
